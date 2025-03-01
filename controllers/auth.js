@@ -48,6 +48,16 @@ const login = async (req, res) => {
     }
 };
 
+const protectedRoute = (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    res.status(200).json({ message: "Access granted", userId: decoded.userId });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
 
 const verifyEmail = async (req, res) => {
   const { email, code } = req.body;
@@ -75,4 +85,4 @@ const verifyEmail = async (req, res) => {
 };
 
 
-module.exports = {register, login, verifyEmail}
+module.exports = {register, login, protectedRoute, verifyEmail}
