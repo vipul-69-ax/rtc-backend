@@ -6,6 +6,6 @@ const AuthRouter = Router()
 AuthRouter.post("/register", register);
 AuthRouter.post("/login", login);
 AuthRouter.post("/verify-email", verifyEmail);
-
+AuthRouter.post("/verify-token", protectedRoute);
 
 module.exports = AuthRouter
