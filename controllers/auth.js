@@ -53,8 +53,10 @@ const protectedRoute = (req, res) => {
   if (!token) return res.status(401).json({ message: "Unauthorized" });
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    console.log(decoded)
     res.status(200).json({ message: "Access granted", userId: decoded.userId });
   } catch (err) {
+    console.log(err)
     res.status(401).json({ message: "Invalid token" });
   }
 };
